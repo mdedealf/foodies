@@ -6,12 +6,28 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        red: {
-          100: "#D33B0D",
+        primary: "#FE8C00",
+        white: {
+          DEFAULT: "#FFFFFF",
+          100: "#FAFAFA",
+          200: "#FE8C00",
         },
-        green: {
-          100: "#0F9D58",
+        gray: {
+          100: "#878787",
+          200: "#878787",
         },
+        dark: {
+          100: "#181C2E",
+        },
+        error: "#F14141",
+        success: "#2F9865",
+      },
+      fontFamily: {
+        quicksand: ["Quicksand", "sans-serif"],
+        "quicksand-bold": ["Quicksand-Bold", "sans-serif"],
+        "quicksand-semibold": ["Quicksand-SemiBold", "sans-serif"],
+        "quicksand-light": ["Quicksand-Light", "sans-serif"],
+        "quicksand-medium": ["Quicksand-Medium", "sans-serif"],
       },
     },
   },
