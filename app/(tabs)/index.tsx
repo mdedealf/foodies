@@ -12,9 +12,14 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import useAuthStore from "@/store/auth.store";
 import "../globals.css";
 
 export default function Index() {
+  const { user } = useAuthStore();
+
+  console.log("authenticated user:", JSON.stringify(user, null, 2));
+
   return (
     <SafeAreaView className="flex-1 bg-white">
       {/* FlatList is the same with map in javascript, but it is more optimized for large lists in React Native. */}
