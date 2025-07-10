@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import useAuthStore from "@/store/auth.store";
 import * as Sentry from "@sentry/react-native";
 import "./globals.css";
+import * as Sentry from '@sentry/react-native';
 
 Sentry.init({
   dsn: "https://16e178cf6a7065109d678f7cf7bcbeee@o4509643764465664.ingest.us.sentry.io/4509643774885888",
