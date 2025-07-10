@@ -1,5 +1,12 @@
 import { CreateUserParams, SignInParams } from "@/type";
-import { Account, Avatars, Client, Databases, ID } from "react-native-appwrite";
+import {
+  Account,
+  Avatars,
+  Client,
+  Databases,
+  ID,
+  Query,
+} from "react-native-appwrite";
 
 export const appwriteConfig = {
   endpoint: process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT!,
@@ -49,5 +56,24 @@ export const signIn = async ({ email, password }: SignInParams) => {
     const session = await account.createEmailPasswordSession(email, password);
   } catch (e: string | any) {
     throw new Error(e?.message || "Failed to sign in");
+  }
+};
+
+export const getCurrentUser = async () => {
+  try {
+    const currentAccount = await account.get();
+    if (!currentAccount) throw new Error("No user is currently signed in");
+
+    const currentUser = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.userCollectionId,
+      [Query.equal("accountId", currentAccount.$id)]
+    );
+
+    if (!currentUser) throw new Error("User not found in the database");
+
+    return currentUser.documents[0];
+  } catch (e: string | any) {
+    throw new Error(e?.message || "Failed to fetch current user");
   }
 };
