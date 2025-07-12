@@ -58,29 +58,23 @@ async function clearStorage(): Promise<void> {
 }
 
 async function uploadImageToStorage(imageUrl: string) {
-  try {
-    const response = await fetch(imageUrl);
-    const blob = await response.blob();
+  const response = await fetch(imageUrl);
+  const blob = await response.blob();
 
-    const fileObj = {
-      name: imageUrl.split("/").pop() || `file-${Date.now()}.jpg`,
-      type: "image/png",
-      size: blob.size,
-      uri: imageUrl,
-    };
+  const fileObj = {
+    name: imageUrl.split("/").pop() || `file-${Date.now()}.jpg`,
+    type: blob.type ? blob.type : "image/png",
+    size: blob.size,
+    uri: imageUrl,
+  };
 
-    const file = await storage.createFile(
-      appwriteConfig.bucketId,
-      ID.unique(),
-      fileObj
-    );
+  const file = await storage.createFile(
+    appwriteConfig.bucketId,
+    ID.unique(),
+    fileObj
+  );
 
-    console.log("Upload file successful");
-    return storage.getFileViewURL(appwriteConfig.bucketId, file.$id);
-  } catch (err) {
-    console.error("❌ Upload failed for:", imageUrl, err);
-    throw err;
-  }
+  return storage.getFileViewURL(appwriteConfig.bucketId, file.$id);
 }
 
 async function seed(): Promise<void> {
