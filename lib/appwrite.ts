@@ -1,4 +1,9 @@
-import { CreateUserParams, GetMenuParams, SignInParams } from "@/type";
+import {
+  Category,
+  CreateUserParams,
+  GetMenuParams,
+  SignInParams,
+} from "@/type";
 import {
   Account,
   Avatars,
@@ -63,7 +68,7 @@ export const createUser = async ({
 
 export const signIn = async ({ email, password }: SignInParams) => {
   try {
-    const session = await account.createEmailPasswordSession(email, password);
+    await account.createEmailPasswordSession(email, password);
   } catch (e: string | any) {
     throw new Error(e?.message || "Failed to sign in");
   }
@@ -114,7 +119,7 @@ export const getCategories = async () => {
       appwriteConfig.categoriesCollectionId
     );
 
-    return categories.documents;
+    return categories.documents as Category[];
   } catch (e: string | any) {
     throw new Error(e?.message || "Failed to fetch categories");
   }
